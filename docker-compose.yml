@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  miniconda:
+    build: .
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./models/:/root/stable/models
+      - ./outputs/:/root/stable/outputs
+      - ./.cache/huggingface/:/root/.cache/huggingface
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
